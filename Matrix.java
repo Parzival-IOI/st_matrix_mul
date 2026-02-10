@@ -36,6 +36,22 @@ class Matrix {
     return true;
   }
 
+  public boolean validateMatrixMul(ArrayList<ArrayList<Integer>> matrixA, ArrayList<ArrayList<Integer>> matrixB) {
+    System.out.println("Checking if matrices are created...");
+    if (matrixA == null || matrixB == null) {
+      System.out.println("Matrices are not created yet.");
+      return false;
+    }
+
+    if (matrixA.get(0).size() != matrixB.size()) {
+      System.out.println("Matrix multiplication is not possible: dimensions mismatch.");
+      return false;
+    }
+
+    return true;
+  }
+
+
   public ArrayList<ArrayList<Integer>> createMatrix() {
     int columns, rows;
     System.out.print("Enter number of columns: ");
@@ -91,7 +107,9 @@ class Matrix {
 
   public void multiply(ArrayList<ArrayList<Integer>> matrixA, ArrayList<ArrayList<Integer>> matrixB) {
 
-    validateMatrix(matrixA, matrixB);
+    if (!validateMatrixMul(matrixA, matrixB)) {
+      return;
+    }
 
     int rows = matrixA.size();
     int columns = matrixB.get(0).size();
@@ -108,7 +126,7 @@ class Matrix {
 
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < columns; j++) {
-        for (int k = 0; k < columns; k++) {
+        for (int k = 0; k < matrixA.get(0).size(); k++) {
           resultMatrix.get(i).set(j, resultMatrix.get(i).get(j) + matrixA.get(i).get(k) * matrixB.get(k).get(j));
         }
       }
